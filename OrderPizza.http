@@ -1,0 +1,12 @@
+### Order a pizza
+POST http://localhost:8383/order
+Content-Type: application/json
+
+{
+    "name":"Jonathan Stronkhorst",
+    "phoneNumber":"0612345678",
+    "isDeliveryOrder":true,
+    "address":"Example 123, 1234AB Utrecht",
+    "pizzas":[1, 2]
+}
+###

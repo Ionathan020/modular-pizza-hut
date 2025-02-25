@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  mongodb:
+    image: docker.io/bitnami/mongodb:8.0.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'mongodb_data:/bitnami/mongodb'
+    environment:
+      - MONGODB_ROOT_PASSWORD=pizza
+      - MONGODB_USERNAME=pizza
+      - MONGODB_PASSWORD=pizza
+      - MONGODB_DATABASE=pizza
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  pizza:
+    name: pizza

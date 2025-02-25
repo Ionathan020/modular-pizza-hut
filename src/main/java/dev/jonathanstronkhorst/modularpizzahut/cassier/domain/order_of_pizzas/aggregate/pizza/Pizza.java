@@ -1,6 +1,7 @@
 package dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza;
 
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.ingredients.*;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -32,6 +33,26 @@ public enum Pizza {
             }
         }
         return false;
+    }
+
+    public static Pizza getPizzaForId(Integer id) {
+        for (Pizza pizza : Pizza.values()) {
+            if (pizza.getId() == id) {
+                return pizza;
+            }
+        }
+        return null;
+    }
+
+    public static List<Pizza> getPizzasForIds(List<Integer> pizzaIds) {
+        var pizzas = new ArrayList<Pizza>();
+        for (Integer pizzaId : pizzaIds) {
+            Pizza pizza = getPizzaForId(pizzaId);
+            if (pizza != null) {
+                pizzas.add(pizza);
+            }
+        }
+        return pizzas;
     }
 
 }
