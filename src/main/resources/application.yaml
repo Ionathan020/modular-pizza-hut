@@ -1,1 +1,13 @@
-spring.application.name=modular-pizza-hut
+server:
+  port: 8383
+spring:
+  application:
+    name: modular-pizza-hut
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: pizza
+      password: pizza
+      database: pizza
+      uuid-representation: standard

@@ -1,4 +1,6 @@
-version: "2"
+networks:
+  app-tier:
+    driver: bridge
 
 services:
   mongodb:
@@ -8,15 +10,13 @@ services:
     volumes:
       - 'mongodb_data:/bitnami/mongodb'
     environment:
-      - MONGODB_ROOT_PASSWORD=pizza
+      - MONGODB_ROOT_PASSWORD=P1zz4M45ter
       - MONGODB_USERNAME=pizza
       - MONGODB_PASSWORD=pizza
-      - MONGODB_DATABASE=pizza
+    networks:
+      - app-tier
 
 volumes:
   mongodb_data:
     driver: local
 
-networks:
-  pizza:
-    name: pizza

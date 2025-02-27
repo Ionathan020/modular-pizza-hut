@@ -8,8 +8,8 @@ import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.ag
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order.IsDeliveryOrder;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.event.PizzaOrdered;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
 
-
+    private final OrderOfPizzaJPARepository orderOfPizzaJPARepository;
     private final SpringOrderOfPizzasEventPublisher springOrderOfPizzasEventPublisher;
 
     @Override
@@ -36,6 +36,12 @@ public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
 
     @Override
     public void save(PizzaOrdered pizzaOrdered) {
-
+        OrderOfPizzaDocument orderOfPizzaDocument = orderOfPizzaJPARepository.findByOrderReference(
+                pizzaOrdered.getOrderReference().orderReference())
+                .orElse(OrderOfPizzaDocument.of(
+                        pizzaOrdered.getOrderReference().orderReference(),
+                        pizzaOrdered.getPizzas().stream()
+                                .map(Pizza::getId).collect(Collectors.toList())));
+        orderOfPizzaJPARepository.save(orderOfPizzaDocument);
     }
 }

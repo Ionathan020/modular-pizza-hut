@@ -10,6 +10,7 @@ public class SpringPizzaOrderedEvent extends ApplicationEvent {
     private final UUID orderReference;
 
 
+
     public SpringPizzaOrderedEvent(SpringOrderOfPizzasEventPublisher publisher, UUID orderReference) {
         super(publisher);
         this.orderReference = orderReference;

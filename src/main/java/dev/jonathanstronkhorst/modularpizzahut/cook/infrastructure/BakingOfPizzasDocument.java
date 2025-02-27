@@ -1,4 +1,4 @@
-package dev.jonathanstronkhorst.modularpizzahut.cassier.infrastructure;
+package dev.jonathanstronkhorst.modularpizzahut.cook.infrastructure;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,22 +15,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @Document(collection = "pizza_order")
-public class OrderOfPizzaDocument {
+public class BakingOfPizzasDocument {
+
     @Setter(AccessLevel.NONE)
     @Id
     private ObjectId _id;
     private UUID orderReference;
+    private boolean isDeliveryOrder;
     private List<Integer> pizzaIds;
     @Version
     private Long version;
 
-    private OrderOfPizzaDocument(UUID orderReference, List<Integer> pizzaIds) {
+    private BakingOfPizzasDocument(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
         this.orderReference = orderReference;
+        this.isDeliveryOrder = isDeliveryOrder;
         this.pizzaIds = pizzaIds;
     }
 
-    public static OrderOfPizzaDocument of(UUID orderReference, List<Integer> pizzaIds) {
-        return new OrderOfPizzaDocument(orderReference, pizzaIds);
+    public static BakingOfPizzasDocument of(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
+        return new BakingOfPizzasDocument(orderReference, isDeliveryOrder, pizzaIds);
     }
-
 }

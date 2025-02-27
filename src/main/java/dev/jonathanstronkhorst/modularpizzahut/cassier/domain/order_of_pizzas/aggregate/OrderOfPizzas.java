@@ -45,6 +45,9 @@ public class OrderOfPizzas {
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     """);
+            return PizzaOrderResult.of(
+                    orderReference,
+                    OrderStatus.NEW);
         }
         return PizzaOrderResult.of(
                 orderReference,
