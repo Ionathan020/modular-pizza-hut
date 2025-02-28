@@ -1,0 +1,8 @@
+-- CREATE TABLE pizzaorders
+-- (
+--     id                BIGINT  NOT NULL,
+--     order_reference   UUID,
+--     is_delivery_order BOOLEAN NOT NULL,
+--     pizza_ids         VARCHAR(255),
+--     CONSTRAINT pk_pizzaorders PRIMARY KEY (id)
+-- );

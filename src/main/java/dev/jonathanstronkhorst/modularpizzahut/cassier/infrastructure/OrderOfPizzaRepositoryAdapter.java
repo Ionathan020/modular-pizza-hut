@@ -40,6 +40,7 @@ public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
                 pizzaOrdered.getOrderReference().orderReference())
                 .orElse(OrderOfPizzaDocument.of(
                         pizzaOrdered.getOrderReference().orderReference(),
+                        pizzaOrdered.getIsDeliveryOrder().isDeliveryOrder(),
                         pizzaOrdered.getPizzas().stream()
                                 .map(Pizza::getId).collect(Collectors.toList())));
         orderOfPizzaJPARepository.save(orderOfPizzaDocument);

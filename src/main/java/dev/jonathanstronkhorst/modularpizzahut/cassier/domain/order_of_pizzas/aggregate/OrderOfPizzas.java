@@ -51,7 +51,7 @@ public class OrderOfPizzas {
         }
         return PizzaOrderResult.of(
                 orderReference,
-                PizzaOrdered.of(orderReference, OrderStatus.NEW, orderOfPizzasEntity.getPizzas()),
+                PizzaOrdered.of(orderReference, OrderStatus.NEW, orderOfPizzasEntity.getIsDeliveryOrder(), orderOfPizzasEntity.getPizzas()),
                 OrderStatus.NEW);
     }
 

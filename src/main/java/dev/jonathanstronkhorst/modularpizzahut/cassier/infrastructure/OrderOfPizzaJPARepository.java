@@ -2,10 +2,9 @@ package dev.jonathanstronkhorst.modularpizzahut.cassier.infrastructure;
 
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface OrderOfPizzaJPARepository extends CrudRepository<OrderOfPizzaDocument, UUID> {
+
+public interface OrderOfPizzaJPARepository extends JpaRepository<OrderOfPizzaDocument, Long> {
     Optional<OrderOfPizzaDocument> findByOrderReference(UUID orderReference);
 }

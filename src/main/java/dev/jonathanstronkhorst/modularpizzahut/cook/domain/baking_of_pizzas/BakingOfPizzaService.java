@@ -22,7 +22,7 @@ public class BakingOfPizzaService {
         BakedPizzaResult bakedPizzaResult = bakingOfPizzas.handleCommand(
                 BakePizzas.of(orderReference, OrderStatus.BAKED));
         if (bakedPizzaResult.getEvent() != null) {
-            bakedPizzaResult.getEvent().save(bakingOfPizzaRepository);
+            bakedPizzaResult.getEvent().publish(bakingOfPizzaRepository);
             bakedPizzaResult.getEvent().save(bakingOfPizzaRepository);
         }
         return bakedPizzaResult;

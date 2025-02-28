@@ -1,36 +1,47 @@
 package dev.jonathanstronkhorst.modularpizzahut.cassier.infrastructure;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.stream.Collectors;
+import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Document(collection = "pizza_order")
+@Table(name="pizzaorders")
 public class OrderOfPizzaDocument {
-    @Setter(AccessLevel.NONE)
     @Id
-    private ObjectId _id;
+    @GeneratedValue
+    private int id;
     private UUID orderReference;
-    private List<Integer> pizzaIds;
-    @Version
-    private Long version;
+    private boolean isDeliveryOrder;
+    private String pizzaIds;
 
-    private OrderOfPizzaDocument(UUID orderReference, List<Integer> pizzaIds) {
+    private OrderOfPizzaDocument(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
         this.orderReference = orderReference;
-        this.pizzaIds = pizzaIds;
+        this.isDeliveryOrder = isDeliveryOrder;
+        setPizzaIds(pizzaIds);
     }
 
-    public static OrderOfPizzaDocument of(UUID orderReference, List<Integer> pizzaIds) {
-        return new OrderOfPizzaDocument(orderReference, pizzaIds);
+    public static OrderOfPizzaDocument of(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
+        return new OrderOfPizzaDocument(orderReference, isDeliveryOrder, pizzaIds);
+    }
+
+    public List<Integer> getPizzaIds() {
+        return Arrays.stream(pizzaIds.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
+    public void setPizzaIds(List<Integer> pizzaIds) {
+        this.pizzaIds = pizzaIds.stream().map(String::valueOf)
+                .collect(Collectors.joining(","));
     }
 
 }
