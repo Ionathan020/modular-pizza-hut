@@ -32,6 +32,7 @@ public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
                         springOrderOfPizzasEventPublisher,
                         pizzaOrdered.getOrderReference().orderReference()
                 ));
+        System.out.println("Event send for order: " + pizzaOrdered.getOrderReference().orderReference().toString());
     }
 
     @Override
@@ -40,9 +41,13 @@ public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
                 pizzaOrdered.getOrderReference().orderReference())
                 .orElse(OrderOfPizzaDocument.of(
                         pizzaOrdered.getOrderReference().orderReference(),
+                        pizzaOrdered.getCustomerDetails().name(),
+                        pizzaOrdered.getCustomerDetails().phoneNumber(),
                         pizzaOrdered.getIsDeliveryOrder().isDeliveryOrder(),
+                        pizzaOrdered.getDeliveryAddress().address(),
                         pizzaOrdered.getPizzas().stream()
                                 .map(Pizza::getId).collect(Collectors.toList())));
         orderOfPizzaJPARepository.save(orderOfPizzaDocument);
+        System.out.println("Information of order saved for order: " + pizzaOrdered.getOrderReference().orderReference().toString());
     }
 }

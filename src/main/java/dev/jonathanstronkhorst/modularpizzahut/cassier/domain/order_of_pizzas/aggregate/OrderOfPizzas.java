@@ -19,9 +19,10 @@ public class OrderOfPizzas {
     }
 
     public PizzaOrderResult handleCommand(OrderPizzas orderPizzas) {
+        System.out.println("Start handling new pizza order command.");
         var orderReference =  new OrderReference(UUID.randomUUID());
         if (orderOfPizzasEntity.hasPizzaContainingPineapple()) {
-            System.out.print("""
+            System.out.println("""
                                ⠀⠀⢀⣤⣤⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠿⢿⣏⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣶⣶⣿⣇⡁⠈⢿⣧⡀⠹⣿⣦⡀⠀⠀⠀⠀
@@ -45,13 +46,21 @@ public class OrderOfPizzas {
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     """);
+            System.out.println("We will not serve pizza with pineapple for order: " +
+                    orderReference.orderReference().toString());
             return PizzaOrderResult.of(
                     orderReference,
                     OrderStatus.NEW);
         }
+        System.out.println("Order handled for: " + orderReference.orderReference().toString());
         return PizzaOrderResult.of(
                 orderReference,
-                PizzaOrdered.of(orderReference, OrderStatus.NEW, orderOfPizzasEntity.getIsDeliveryOrder(), orderOfPizzasEntity.getPizzas()),
+                PizzaOrdered.of(orderReference,
+                        OrderStatus.NEW,
+                        orderOfPizzasEntity.getCustomerDetails(),
+                        orderOfPizzasEntity.getIsDeliveryOrder(),
+                        orderOfPizzasEntity.getDeliveryAddress(),
+                        orderOfPizzasEntity.getPizzas()),
                 OrderStatus.NEW);
     }
 

@@ -15,7 +15,6 @@ public class PizzaOrderedEventListener implements ApplicationListener<SpringPizz
 
     @Override
     public void onApplicationEvent(SpringPizzaOrderedEvent event) {
-
         bakingOfPizzaService.bakePizza(OrderReference.of(event.getOrderReference()));
     }
 }

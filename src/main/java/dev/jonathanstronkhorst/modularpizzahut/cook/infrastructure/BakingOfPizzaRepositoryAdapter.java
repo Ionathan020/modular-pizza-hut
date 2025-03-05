@@ -17,11 +17,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BakingOfPizzaRepositoryAdapter implements BakingOfPizzaRepository {
     private final BakingOfPizzaProvider bakingOfPizzaProvider;
-    BakingOfPizzaJPARepository bakingOfPizzaJPARepository;
-    SpringPizzaBakedEventPublisher springPizzaBakedEventPublisher;
+    private final BakingOfPizzaJPARepository bakingOfPizzaJPARepository;
+    private final SpringPizzaBakedEventPublisher springPizzaBakedEventPublisher;
 
     @Override
     public Optional<BakingOfPizzas> findBakingOfPizzas(OrderReference orderReference) {
+
         Optional<BakingOfPizzasDocument> optionalBakingOfPizzasDocument = bakingOfPizzaJPARepository.findByOrderReference(orderReference.orderReference());
         if (optionalBakingOfPizzasDocument.isPresent()) {
             BakingOfPizzasDocument bakingOfPizzasDocument = optionalBakingOfPizzasDocument.get();
@@ -43,9 +44,9 @@ public class BakingOfPizzaRepositoryAdapter implements BakingOfPizzaRepository {
 
     @Override
     public void save(PizzasBaked pizzasBaked) {
-        BakingOfPizzasDocument bakingOfPizzasDocument = bakingOfPizzaJPARepository.findByOrderReference(pizzasBaked.getOrderReference().orderReference())
+        bakingOfPizzaJPARepository.save(bakingOfPizzaJPARepository.findByOrderReference(pizzasBaked.getOrderReference().orderReference())
                 .orElse(BakingOfPizzasDocument
                         .of(pizzasBaked.getOrderReference().orderReference(), pizzasBaked.getIsDeliveryOrder().isDeliveryOrder(), pizzasBaked.getPizzas().stream()
-                                .map(Pizza::getId).collect(Collectors.toList())));
+                                .map(Pizza::getId).collect(Collectors.toList()))));
     }
 }

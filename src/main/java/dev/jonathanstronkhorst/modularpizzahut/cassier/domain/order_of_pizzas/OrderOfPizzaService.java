@@ -21,12 +21,14 @@ public class OrderOfPizzaService {
                                    IsDeliveryOrder isDeliveryOrder,
                                    DeliveryAddress deliveryAddress,
                                    List<Pizza> pizzas) {
+        System.out.println("Ordering pizza's");
         OrderOfPizzas orderOfPizzas = orderOfPizzaProvider.newOrderOfPizzas(customerDetails, isDeliveryOrder, deliveryAddress, pizzas);
         PizzaOrderResult pizzaOrderResult = orderOfPizzas.handleCommand(OrderPizzas.of(customerDetails, isDeliveryOrder, deliveryAddress, pizzas));
         if (pizzaOrderResult.getEvent() != null) {
             pizzaOrderResult.getEvent().save(orderOfPizzaRepository);
             pizzaOrderResult.getEvent().publish(orderOfPizzaRepository);
         }
+        System.out.println("Pizza's ordered with reference: " + pizzaOrderResult.getOrderReference().orderReference().toString());
         return pizzaOrderResult;
     }
 }

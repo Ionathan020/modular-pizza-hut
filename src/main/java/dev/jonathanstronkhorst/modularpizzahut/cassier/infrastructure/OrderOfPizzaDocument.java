@@ -17,20 +17,34 @@ import lombok.*;
 @Table(name="pizzaorders")
 public class OrderOfPizzaDocument {
     @Id
-    @GeneratedValue
-    private int id;
     private UUID orderReference;
+    private String name;
+    private String phoneNumber;
     private boolean isDeliveryOrder;
+    private String address;
     private String pizzaIds;
 
-    private OrderOfPizzaDocument(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
+    private OrderOfPizzaDocument(UUID orderReference,
+                                 String name,
+                                 String phoneNumber,
+                                 boolean isDeliveryOrder,
+                                 String address,
+                                 List<Integer> pizzaIds) {
         this.orderReference = orderReference;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
         this.isDeliveryOrder = isDeliveryOrder;
+        this.address = address;
         setPizzaIds(pizzaIds);
     }
 
-    public static OrderOfPizzaDocument of(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
-        return new OrderOfPizzaDocument(orderReference, isDeliveryOrder, pizzaIds);
+    public static OrderOfPizzaDocument of(UUID orderReference,
+                                          String name,
+                                          String phoneNumber,
+                                          boolean isDeliveryOrder,
+                                          String address,
+                                          List<Integer> pizzaIds) {
+        return new OrderOfPizzaDocument(orderReference, name, phoneNumber, isDeliveryOrder, address, pizzaIds);
     }
 
     public List<Integer> getPizzaIds() {

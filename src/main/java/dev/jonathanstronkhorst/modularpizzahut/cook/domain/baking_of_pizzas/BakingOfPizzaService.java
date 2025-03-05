@@ -15,16 +15,20 @@ public class BakingOfPizzaService {
     private final BakingOfPizzaProvider bakingOfPizzaProvider;
 
     public BakedPizzaResult bakePizza(OrderReference orderReference) {
+        System.out.println("Start baking fo0r order: " + orderReference.orderReference().toString());
         BakingOfPizzas bakingOfPizzas = getBakingOfPizzasByOrderReference(orderReference);
         if (bakingOfPizzas == null) {
+            System.out.println("Couldn't find order: " + orderReference.orderReference().toString());
             return BakedPizzaResult.of(null,null,null);
         }
         BakedPizzaResult bakedPizzaResult = bakingOfPizzas.handleCommand(
                 BakePizzas.of(orderReference, OrderStatus.BAKED));
         if (bakedPizzaResult.getEvent() != null) {
+            System.out.println("Even wachten!");
             bakedPizzaResult.getEvent().publish(bakingOfPizzaRepository);
             bakedPizzaResult.getEvent().save(bakingOfPizzaRepository);
         }
+        System.out.println("Done baking for order: " + orderReference.orderReference().toString());
         return bakedPizzaResult;
     }
 

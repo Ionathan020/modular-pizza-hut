@@ -15,10 +15,11 @@ import lombok.*;
 public class BakingOfPizzasDocument {
 
     @Id
-    @GeneratedValue
-    private int id;
     private UUID orderReference;
+    private String name;
+    private String phoneNumber;
     private boolean isDeliveryOrder;
+    private String address;
     private String pizzaIds;
 
     private BakingOfPizzasDocument(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {

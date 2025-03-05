@@ -23,6 +23,7 @@ public class OrderOfPizzasController {
 
     @PostMapping
     public ResponseEntity<Void> orderPizzas(@RequestBody OrderOfPizzaRequest orderOfPizzaRequest) {
+        System.out.println("Recieved new order!");
         var pizzaOrdered = orderOfPizzaService.orderPizza(
                 CustomerDetails.of(orderOfPizzaRequest.getName(), orderOfPizzaRequest.getPhoneNumber()),
                 IsDeliveryOrder.of(orderOfPizzaRequest.isDeliveryOrder()),
@@ -31,6 +32,7 @@ public class OrderOfPizzasController {
         if (pizzaOrdered.getOrderStatus() == OrderStatus.NEW) {
             return ResponseEntity.created(URI.create("/order/" + pizzaOrdered.getOrderReference().orderReference().toString())).build();
         }
+        System.out.println("Processing new order");
         return ResponseEntity.unprocessableEntity().build();
     }
 }
