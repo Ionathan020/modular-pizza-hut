@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dev.jonathanstronkhorst</groupId>
     <artifactId>modular-pizza-hut</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>modular-pizza-hut</name>
     <description>modular-pizza-hut</description>
     <url/>
@@ -20,12 +20,12 @@
     <developers>
         <developer>
             <name>Jonathan Stronkhorst</name>
-            <email>jstronkhorst@svb.nl</email>
+            <email>jonathan@codefoundry.nl</email>
         </developer>
     </developers>
     <properties>
-        <java.version>21</java.version>
-        <spring-modulith.version>1.3.1</spring-modulith.version>
+        <java.version>24</java.version>
+        <spring-modulith.version>1.4.3</spring-modulith.version>
     </properties>
     <dependencies>
         <dependency>

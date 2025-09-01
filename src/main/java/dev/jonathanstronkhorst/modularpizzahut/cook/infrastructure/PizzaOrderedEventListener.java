@@ -1,6 +1,6 @@
 package dev.jonathanstronkhorst.modularpizzahut.cook.infrastructure;
 
-import dev.jonathanstronkhorst.modularpizzahut.cassier.SpringPizzaOrderedEvent;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.SpringPizzaOrderedEvent;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.BakingOfPizzaService;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderReference;
 import lombok.RequiredArgsConstructor;
