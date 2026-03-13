@@ -8,6 +8,9 @@ import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.ag
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order.IsDeliveryOrder;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.event.PizzaOrdered;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
+    private static final Logger logger = LoggerFactory.getLogger(OrderOfPizzaRepositoryAdapter.class);
 
     private final OrderOfPizzaJPARepository orderOfPizzaJPARepository;
     private final SpringOrderOfPizzasEventPublisher springOrderOfPizzasEventPublisher;
@@ -36,7 +40,7 @@ public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
                         springOrderOfPizzasEventPublisher,
                         pizzaOrdered.getOrderReference().orderReference()
                 ));
-        System.out.println("Event send for order: " + pizzaOrdered.getOrderReference().orderReference().toString());
+        logger.info("Event send for order: {}", pizzaOrdered.getOrderReference().orderReference().toString());
     }
 
     @Override
@@ -52,6 +56,6 @@ public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
                         pizzaOrdered.getPizzas().stream()
                                 .map(Pizza::getId).collect(Collectors.toList())));
         orderOfPizzaJPARepository.save(orderOfPizzaDocument);
-        System.out.println("Information of order saved for order: " + pizzaOrdered.getOrderReference().orderReference().toString());
+        logger.info("Information of order saved for order: {}", pizzaOrdered.getOrderReference().orderReference().toString());
     }
 }
