@@ -43,4 +43,4 @@ vite.config.ts
 vite.generated.ts
 sw.ts
 sw.generated.ts
-/src/main/frontend/
+/src/main/frontend/generated/
