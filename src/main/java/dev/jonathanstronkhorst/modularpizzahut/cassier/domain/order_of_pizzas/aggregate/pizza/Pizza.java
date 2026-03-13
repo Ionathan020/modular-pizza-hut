@@ -6,13 +6,24 @@ import java.util.List;
 
 public enum Pizza {
     SALAMI(1, "Salami", List.of(
+            new TomatoSauce(10),
             new Salami(25),
             new Cheese(10)
     )),
     HAWAI(2, "Hawai", List.of(
+            new TomatoSauce(10),
             new Ham(30),
             new Pineapple(5),
-            new Cheese(8)));
+            new Cheese(8))),
+    MARGHERITA(3, "Margherita", List.of(
+            new TomatoSauce(15),
+            new Cheese(20)
+    )),
+    VEGGIE(4, "Veggie", List.of(
+            new TomatoSauce(10),
+            new Mushroom(15),
+            new Cheese(10)
+    ));
 
     final int id;
     final String name;
