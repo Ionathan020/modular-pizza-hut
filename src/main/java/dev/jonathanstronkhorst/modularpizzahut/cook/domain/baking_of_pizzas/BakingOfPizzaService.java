@@ -5,34 +5,33 @@ import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggr
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderStatus;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.pizza.BakedPizzaResult;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.command.BakePizzas;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BakingOfPizzaService {
-    private static final Logger logger = LoggerFactory.getLogger(BakingOfPizzaService.class);
     private final BakingOfPizzaRepository bakingOfPizzaRepository;
+    private final BakingOfPizzaProvider bakingOfPizzaProvider;
 
-    public BakingOfPizzaService(BakingOfPizzaRepository bakingOfPizzaRepository) {
+    public BakingOfPizzaService(BakingOfPizzaRepository bakingOfPizzaRepository, BakingOfPizzaProvider bakingOfPizzaProvider) {
         this.bakingOfPizzaRepository = bakingOfPizzaRepository;
+        this.bakingOfPizzaProvider = bakingOfPizzaProvider;
     }
 
     public BakedPizzaResult bakePizza(OrderReference orderReference) {
-        logger.info("Start baking for order: {}", orderReference.orderReference().toString());
+        System.out.println("Start baking fo0r order: " + orderReference.orderReference().toString());
         BakingOfPizzas bakingOfPizzas = getBakingOfPizzasByOrderReference(orderReference);
         if (bakingOfPizzas == null) {
-            logger.warn("Couldn't find order: {}", orderReference.orderReference().toString());
+            System.out.println("Couldn't find order: " + orderReference.orderReference().toString());
             return BakedPizzaResult.of(null,null,null);
         }
         BakedPizzaResult bakedPizzaResult = bakingOfPizzas.handleCommand(
                 BakePizzas.of(orderReference, OrderStatus.BAKED));
         if (bakedPizzaResult.getEvent() != null) {
-            logger.info("Even wachten!");
+            System.out.println("Even wachten!");
             bakedPizzaResult.getEvent().publish(bakingOfPizzaRepository);
             bakedPizzaResult.getEvent().save(bakingOfPizzaRepository);
         }
-        logger.info("Done baking for order: {}", orderReference.orderReference().toString());
+        System.out.println("Done baking for order: " + orderReference.orderReference().toString());
         return bakedPizzaResult;
     }
 

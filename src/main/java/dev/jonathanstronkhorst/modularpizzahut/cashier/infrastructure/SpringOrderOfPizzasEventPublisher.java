@@ -1,6 +1,6 @@
-package dev.jonathanstronkhorst.modularpizzahut.cashier.infrastructure;
+package dev.jonathanstronkhorst.modularpizzahut.cassier.infrastructure;
 
-import dev.jonathanstronkhorst.modularpizzahut.cashier.SpringPizzaOrderedEvent;
+import dev.jonathanstronkhorst.modularpizzahut.cassier.SpringPizzaOrderedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
