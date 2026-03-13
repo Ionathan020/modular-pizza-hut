@@ -5,14 +5,17 @@ import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggr
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderStatus;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.pizza.BakedPizzaResult;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.command.BakePizzas;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
 public class BakingOfPizzaService {
     private final BakingOfPizzaRepository bakingOfPizzaRepository;
     private final BakingOfPizzaProvider bakingOfPizzaProvider;
+
+    public BakingOfPizzaService(BakingOfPizzaRepository bakingOfPizzaRepository, BakingOfPizzaProvider bakingOfPizzaProvider) {
+        this.bakingOfPizzaRepository = bakingOfPizzaRepository;
+        this.bakingOfPizzaProvider = bakingOfPizzaProvider;
+    }
 
     public BakedPizzaResult bakePizza(OrderReference orderReference) {
         System.out.println("Start baking fo0r order: " + orderReference.orderReference().toString());

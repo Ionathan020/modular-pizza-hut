@@ -1,8 +1,6 @@
-package dev.jonathanstronkhorst.modularpizzahut.cashier.infrastructure;
+package dev.jonathanstronkhorst.modularpizzahut.cook.infrastructure;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +8,8 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name="pizzaorders")
-public class OrderOfPizzaDocument {
+public class BakingOfPizzasDocument {
+
     @Id
     private UUID orderReference;
     private String name;
@@ -19,20 +18,12 @@ public class OrderOfPizzaDocument {
     private String address;
     private String pizzaIds;
 
-    public OrderOfPizzaDocument() {
+    public BakingOfPizzasDocument() {
     }
 
-    private OrderOfPizzaDocument(UUID orderReference,
-                                 String name,
-                                 String phoneNumber,
-                                 boolean isDeliveryOrder,
-                                 String address,
-                                 List<Integer> pizzaIds) {
+    private BakingOfPizzasDocument(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
         this.orderReference = orderReference;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
         this.isDeliveryOrder = isDeliveryOrder;
-        this.address = address;
         setPizzaIds(pizzaIds);
     }
 
@@ -84,13 +75,8 @@ public class OrderOfPizzaDocument {
         this.pizzaIds = pizzaIds;
     }
 
-    public static OrderOfPizzaDocument of(UUID orderReference,
-                                          String name,
-                                          String phoneNumber,
-                                          boolean isDeliveryOrder,
-                                          String address,
-                                          List<Integer> pizzaIds) {
-        return new OrderOfPizzaDocument(orderReference, name, phoneNumber, isDeliveryOrder, address, pizzaIds);
+    public static BakingOfPizzasDocument of(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
+        return new BakingOfPizzasDocument(orderReference, isDeliveryOrder, pizzaIds);
     }
 
     public List<Integer> getPizzaIds() {
@@ -103,5 +89,4 @@ public class OrderOfPizzaDocument {
         this.pizzaIds = pizzaIds.stream().map(String::valueOf)
                 .collect(Collectors.joining(","));
     }
-
 }

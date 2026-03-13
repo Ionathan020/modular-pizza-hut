@@ -3,9 +3,7 @@ package dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.a
 import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.pizza.ingredients.*;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
 
-@Getter
 public enum Pizza {
     SALAMI(1, "Salami", List.of(
             new Salami(25),
@@ -24,6 +22,18 @@ public enum Pizza {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
     public boolean containsPineapple() {
