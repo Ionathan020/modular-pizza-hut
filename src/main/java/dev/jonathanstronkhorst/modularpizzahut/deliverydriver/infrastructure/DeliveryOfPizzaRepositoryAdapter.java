@@ -9,11 +9,15 @@ import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.aggregate.order.DeliveryAddress;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.aggregate.order.OrderReference;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.event.PizzaDelivered;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DeliveryOfPizzaRepositoryAdapter implements DeliveringOfPizzaRepository {
+    private static final Logger logger = LoggerFactory.getLogger(DeliveryOfPizzaRepositoryAdapter.class);
     private final DeliveryOfPizzaJPARepository deliveryOfPizzaJPARepository;
 
     public DeliveryOfPizzaRepositoryAdapter(DeliveryOfPizzaJPARepository deliveryOfPizzaJPARepository) {
@@ -36,7 +40,7 @@ public class DeliveryOfPizzaRepositoryAdapter implements DeliveringOfPizzaReposi
 
     @Override
     public void sendEvent(PizzaDelivered pizzaDelivered) {
-        System.out.println("Pizza!");
+        logger.info("Pizza!");
     }
 
     @Override
@@ -46,6 +50,6 @@ public class DeliveryOfPizzaRepositoryAdapter implements DeliveringOfPizzaReposi
                 pizzaDelivered.getCustomerDetails().name(),
                 pizzaDelivered.getCustomerDetails().phoneNumber(),
                 pizzaDelivered.getDeliveryAddress().address()));
-        System.out.println("WHAT! NO TIP?!");
+        logger.info("WHAT! NO TIP?!");
     }
 }
