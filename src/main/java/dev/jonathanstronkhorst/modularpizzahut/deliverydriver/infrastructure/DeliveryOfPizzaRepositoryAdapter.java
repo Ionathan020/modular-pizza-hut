@@ -10,13 +10,15 @@ import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.aggregate.order.OrderReference;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.event.PizzaDelivered;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class DeliveryOfPizzaRepositoryAdapter implements DeliveringOfPizzaRepository {
     private final DeliveryOfPizzaJPARepository deliveryOfPizzaJPARepository;
+
+    public DeliveryOfPizzaRepositoryAdapter(DeliveryOfPizzaJPARepository deliveryOfPizzaJPARepository) {
+        this.deliveryOfPizzaJPARepository = deliveryOfPizzaJPARepository;
+    }
 
     @Override
     public Optional<DeliveringOfPizza> findDeliveringOfPizza(OrderReference orderReference) {

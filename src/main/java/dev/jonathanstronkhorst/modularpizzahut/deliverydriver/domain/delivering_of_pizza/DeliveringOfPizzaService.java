@@ -5,13 +5,15 @@ import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.aggregate.order.OrderReference;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.aggregate.pizza.DeliveryOfPizzaResult;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.command.DeliverPizza;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
 public class DeliveringOfPizzaService {
     private final DeliveringOfPizzaRepository deliveringOfPizzaRepository;
+
+    public DeliveringOfPizzaService(DeliveringOfPizzaRepository deliveringOfPizzaRepository) {
+        this.deliveringOfPizzaRepository = deliveringOfPizzaRepository;
+    }
 
     public DeliveryOfPizzaResult deliverPizza(OrderReference orderReference) {
         System.out.println("Nog even wachten!");

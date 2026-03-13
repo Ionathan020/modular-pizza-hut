@@ -7,7 +7,6 @@ import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.ag
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order.OrderStatus;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
 import java.net.URI;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/order", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class OrderOfPizzasController {
     private final OrderOfPizzaService orderOfPizzaService;
+
+    public OrderOfPizzasController(OrderOfPizzaService orderOfPizzaService) {
+        this.orderOfPizzaService = orderOfPizzaService;
+    }
 
     @PostMapping
     public ResponseEntity<Void> orderPizzas(@RequestBody OrderOfPizzaRequest orderOfPizzaRequest) {

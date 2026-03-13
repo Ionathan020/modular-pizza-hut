@@ -8,11 +8,13 @@ import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggr
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.command.BakePizzas;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.event.PizzasBaked;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class BakingOfPizzas {
     private final BakingOfPizzasEntity bakingOfPizzasEntity;
+
+    public BakingOfPizzas(BakingOfPizzasEntity bakingOfPizzasEntity) {
+        this.bakingOfPizzasEntity = bakingOfPizzasEntity;
+    }
 
     public static BakingOfPizzas of(OrderReference orderReference,
                                    IsDeliveryOrder isDeliveryOrder,

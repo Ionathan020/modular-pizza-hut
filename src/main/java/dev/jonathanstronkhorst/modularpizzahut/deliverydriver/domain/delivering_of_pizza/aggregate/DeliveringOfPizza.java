@@ -7,11 +7,13 @@ import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.aggregate.pizza.DeliveryOfPizzaResult;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.command.DeliverPizza;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.event.PizzaDelivered;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class DeliveringOfPizza {
     private final DeliveringOfPizzaEntity deliveringOfPizzaEntity;
+
+    public DeliveringOfPizza(DeliveringOfPizzaEntity deliveringOfPizzaEntity) {
+        this.deliveringOfPizzaEntity = deliveringOfPizzaEntity;
+    }
 
     public static DeliveringOfPizza of(OrderReference orderReference, CustomerDetails customerDetails, DeliveryAddress deliveryAddress) {
         return new DeliveringOfPizza(DeliveringOfPizzaEntity.of(orderReference, customerDetails, deliveryAddress));

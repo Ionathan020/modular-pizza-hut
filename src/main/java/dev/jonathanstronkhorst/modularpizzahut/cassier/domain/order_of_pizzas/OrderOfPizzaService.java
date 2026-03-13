@@ -8,14 +8,17 @@ import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.ag
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.command.OrderPizzas;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
 public class OrderOfPizzaService {
     private final OrderOfPizzaProvider orderOfPizzaProvider;
     private final OrderOfPizzaRepository orderOfPizzaRepository;
+
+    public OrderOfPizzaService(OrderOfPizzaProvider orderOfPizzaProvider, OrderOfPizzaRepository orderOfPizzaRepository) {
+        this.orderOfPizzaProvider = orderOfPizzaProvider;
+        this.orderOfPizzaRepository = orderOfPizzaRepository;
+    }
 
     public PizzaOrderResult orderPizza(CustomerDetails customerDetails,
                                    IsDeliveryOrder isDeliveryOrder,

@@ -8,17 +8,21 @@ import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.ag
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order.IsDeliveryOrder;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.event.PizzaOrdered;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class OrderOfPizzaRepositoryAdapter implements OrderOfPizzaRepository {
 
     private final OrderOfPizzaJPARepository orderOfPizzaJPARepository;
     private final SpringOrderOfPizzasEventPublisher springOrderOfPizzasEventPublisher;
+
+    public OrderOfPizzaRepositoryAdapter(OrderOfPizzaJPARepository orderOfPizzaJPARepository, SpringOrderOfPizzasEventPublisher springOrderOfPizzasEventPublisher) {
+        this.orderOfPizzaJPARepository = orderOfPizzaJPARepository;
+        this.springOrderOfPizzasEventPublisher = springOrderOfPizzasEventPublisher;
+    }
 
     @Override
     public Optional<OrderOfPizzas> createOrderOfPizzas(CustomerDetails customerDetails, IsDeliveryOrder isDeliveryOrder, DeliveryAddress deliveryAddress, List<Pizza> pizzas) {

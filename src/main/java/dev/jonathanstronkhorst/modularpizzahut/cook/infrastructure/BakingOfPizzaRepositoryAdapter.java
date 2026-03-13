@@ -1,7 +1,6 @@
 package dev.jonathanstronkhorst.modularpizzahut.cook.infrastructure;
 
 import dev.jonathanstronkhorst.modularpizzahut.cook.SpringPizzaBakedEvent;
-import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.BakingOfPizzaProvider;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.BakingOfPizzaRepository;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.BakingOfPizzas;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.IsDeliveryOrder;
@@ -10,15 +9,17 @@ import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggr
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.event.PizzasBaked;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class BakingOfPizzaRepositoryAdapter implements BakingOfPizzaRepository {
-    private final BakingOfPizzaProvider bakingOfPizzaProvider;
     private final BakingOfPizzaJPARepository bakingOfPizzaJPARepository;
     private final SpringPizzaBakedEventPublisher springPizzaBakedEventPublisher;
+
+    public BakingOfPizzaRepositoryAdapter(BakingOfPizzaJPARepository bakingOfPizzaJPARepository, SpringPizzaBakedEventPublisher springPizzaBakedEventPublisher) {
+        this.bakingOfPizzaJPARepository = bakingOfPizzaJPARepository;
+        this.springPizzaBakedEventPublisher = springPizzaBakedEventPublisher;
+    }
 
     @Override
     public Optional<BakingOfPizzas> findBakingOfPizzas(OrderReference orderReference) {

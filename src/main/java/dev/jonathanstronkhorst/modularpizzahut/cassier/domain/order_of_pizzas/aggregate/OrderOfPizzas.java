@@ -6,11 +6,13 @@ import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.co
 import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.event.PizzaOrdered;
 import java.util.List;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class OrderOfPizzas {
     private final OrderOfPizzasEntity orderOfPizzasEntity;
+
+    public OrderOfPizzas(OrderOfPizzasEntity orderOfPizzasEntity) {
+        this.orderOfPizzasEntity = orderOfPizzasEntity;
+    }
 
     public static OrderOfPizzas of(CustomerDetails customerDetails,
                                   IsDeliveryOrder isDeliveryOrder,
