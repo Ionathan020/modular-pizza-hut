@@ -1,9 +1,9 @@
-package dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate;
+package dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate;
 
-import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order.*;
-import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
-import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.command.OrderPizzas;
-import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.event.PizzaOrdered;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.order.*;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.pizza.Pizza;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.command.OrderPizzas;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.event.PizzaOrdered;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

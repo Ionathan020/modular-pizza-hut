@@ -1,6 +1,6 @@
-package dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order;
+package dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.order;
 
-import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.BasePizzaOrderEvent;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.BasePizzaOrderEvent;
 
 public class PizzaOrderResult {
     private final OrderReference orderReference;

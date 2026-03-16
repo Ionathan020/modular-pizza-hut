@@ -1,6 +1,6 @@
-package dev.jonathanstronkhorst.modularpizzahut.cassier;
+package dev.jonathanstronkhorst.modularpizzahut.cashier;
 
-import dev.jonathanstronkhorst.modularpizzahut.cassier.infrastructure.SpringOrderOfPizzasEventPublisher;
+import dev.jonathanstronkhorst.modularpizzahut.cashier.infrastructure.SpringOrderOfPizzasEventPublisher;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.context.ApplicationEvent;
