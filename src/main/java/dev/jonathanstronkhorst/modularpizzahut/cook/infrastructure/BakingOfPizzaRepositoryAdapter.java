@@ -39,15 +39,39 @@ public class BakingOfPizzaRepositoryAdapter implements BakingOfPizzaRepository {
     @Override
     public void sendEvent(PizzasBaked pizzasBaked) {
         springPizzaBakedEventPublisher.publish(
-                SpringPizzaBakedEvent.of(springPizzaBakedEventPublisher, pizzasBaked.getOrderReference().orderReference())
+                SpringPizzaBakedEvent.of(springPizzaBakedEventPublisher, pizzasBaked.getOrderReference().orderReference(), pizzasBaked.getIsDeliveryOrder().isDeliveryOrder())
         );
     }
 
     @Override
     public void save(PizzasBaked pizzasBaked) {
-        bakingOfPizzaJPARepository.save(bakingOfPizzaJPARepository.findByOrderReference(pizzasBaked.getOrderReference().orderReference())
-                .orElse(BakingOfPizzasDocument
-                        .of(pizzasBaked.getOrderReference().orderReference(), pizzasBaked.getIsDeliveryOrder().isDeliveryOrder(), pizzasBaked.getPizzas().stream()
-                                .map(Pizza::getId).collect(Collectors.toList()))));
+        BakingOfPizzasDocument document = bakingOfPizzaJPARepository.findByOrderReference(pizzasBaked.getOrderReference().orderReference())
+                .orElse(BakingOfPizzasDocument.of(
+                        pizzasBaked.getOrderReference().orderReference(),
+                        null, // name
+                        null, // phoneNumber
+                        pizzasBaked.getIsDeliveryOrder().isDeliveryOrder(),
+                        null, // address
+                        pizzasBaked.getPizzas().stream().map(Pizza::getId).collect(Collectors.toList())
+                ));
+        // Ensure pizzaIds and isDeliveryOrder are updated if they changed (though they shouldn't)
+        document.setDeliveryOrder(pizzasBaked.getIsDeliveryOrder().isDeliveryOrder());
+        document.setPizzaIds(pizzasBaked.getPizzas().stream().map(Pizza::getId).collect(Collectors.toList()));
+        bakingOfPizzaJPARepository.save(document);
+    }
+
+    @Override
+    public void saveInitialOrder(OrderReference orderReference, String name, String phoneNumber, boolean isDeliveryOrder, String address, java.util.List<Integer> pizzaIds) {
+        BakingOfPizzasDocument document = bakingOfPizzaJPARepository.findByOrderReference(orderReference.orderReference())
+                .orElse(BakingOfPizzasDocument.of(orderReference.orderReference(), name, phoneNumber, isDeliveryOrder, address, pizzaIds));
+        
+        // Update fields if they already exist (idempotency)
+        document.setName(name);
+        document.setPhoneNumber(phoneNumber);
+        document.setDeliveryOrder(isDeliveryOrder);
+        document.setAddress(address);
+        document.setPizzaIds(pizzaIds);
+        
+        bakingOfPizzaJPARepository.save(document);
     }
 }

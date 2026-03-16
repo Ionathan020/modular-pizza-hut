@@ -7,15 +7,17 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PizzaBakedEventListener  implements ApplicationListener<SpringPizzaBakedEvent> {
+public class DeliveryPizzaBakedEventListener implements ApplicationListener<SpringPizzaBakedEvent> {
     private final DeliveringOfPizzaService deliveringOfPizzaService;
 
-    public PizzaBakedEventListener(DeliveringOfPizzaService deliveringOfPizzaService) {
+    public DeliveryPizzaBakedEventListener(DeliveringOfPizzaService deliveringOfPizzaService) {
         this.deliveringOfPizzaService = deliveringOfPizzaService;
     }
 
     @Override
     public void onApplicationEvent(SpringPizzaBakedEvent event) {
-        deliveringOfPizzaService.deliverPizza(OrderReference.of(event.getOrderReference()));
+        if (event.isDeliveryOrder()) {
+            deliveringOfPizzaService.deliverPizza(OrderReference.of(event.getOrderReference()));
+        }
     }
 }

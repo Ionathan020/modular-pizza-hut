@@ -75,8 +75,12 @@ public class BakingOfPizzasDocument {
         this.pizzaIds = pizzaIds;
     }
 
-    public static BakingOfPizzasDocument of(UUID orderReference, boolean isDeliveryOrder, List<Integer> pizzaIds) {
-        return new BakingOfPizzasDocument(orderReference, isDeliveryOrder, pizzaIds);
+    public static BakingOfPizzasDocument of(UUID orderReference, String name, String phoneNumber, boolean isDeliveryOrder, String address, List<Integer> pizzaIds) {
+        BakingOfPizzasDocument document = new BakingOfPizzasDocument(orderReference, isDeliveryOrder, pizzaIds);
+        document.setName(name);
+        document.setPhoneNumber(phoneNumber);
+        document.setAddress(address);
+        return document;
     }
 
     public List<Integer> getPizzaIds() {
