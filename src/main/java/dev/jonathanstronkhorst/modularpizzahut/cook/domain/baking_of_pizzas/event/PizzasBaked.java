@@ -7,16 +7,39 @@ import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggr
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderStatus;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.pizza.Pizza;
 import java.util.List;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor(staticName = "of")
 public class PizzasBaked implements BasePizzaBakedEvent {
     private final OrderReference orderReference;
     private final OrderStatus orderStatus;
     private final IsDeliveryOrder isDeliveryOrder;
     private final List<Pizza> pizzas;
+
+    private PizzasBaked(OrderReference orderReference, OrderStatus orderStatus, IsDeliveryOrder isDeliveryOrder, List<Pizza> pizzas) {
+        this.orderReference = orderReference;
+        this.orderStatus = orderStatus;
+        this.isDeliveryOrder = isDeliveryOrder;
+        this.pizzas = pizzas;
+    }
+
+    public static PizzasBaked of(OrderReference orderReference, OrderStatus orderStatus, IsDeliveryOrder isDeliveryOrder, List<Pizza> pizzas) {
+        return new PizzasBaked(orderReference, orderStatus, isDeliveryOrder, pizzas);
+    }
+
+    public OrderReference getOrderReference() {
+        return orderReference;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public IsDeliveryOrder getIsDeliveryOrder() {
+        return isDeliveryOrder;
+    }
+
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
 
     @Override
     public void publish(BakingOfPizzaRepository bakingOfPizzaRepository) {

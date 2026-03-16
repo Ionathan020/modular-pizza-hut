@@ -3,15 +3,29 @@ package dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.agg
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.BasePizzaBakedEvent;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderReference;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderStatus;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor
 public class BakedPizzaResult {
     private final OrderReference orderReference;
     private final BasePizzaBakedEvent event;
     private final OrderStatus orderStatus;
+
+    public BakedPizzaResult(OrderReference orderReference, BasePizzaBakedEvent event, OrderStatus orderStatus) {
+        this.orderReference = orderReference;
+        this.event = event;
+        this.orderStatus = orderStatus;
+    }
+
+    public OrderReference getOrderReference() {
+        return orderReference;
+    }
+
+    public BasePizzaBakedEvent getEvent() {
+        return event;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
 
     public static BakedPizzaResult of(OrderReference orderReference, BasePizzaBakedEvent event, OrderStatus orderStatus) {
         return new BakedPizzaResult(orderReference, event, orderStatus);

@@ -12,4 +12,6 @@ public interface BakingOfPizzaRepository {
     void sendEvent(PizzasBaked pizzasBaked);
 
     void save(PizzasBaked pizzasBaked);
+
+    void saveInitialOrder(OrderReference orderReference, String name, String phoneNumber, boolean isDeliveryOrder, String address, java.util.List<Integer> pizzaIds);
 }

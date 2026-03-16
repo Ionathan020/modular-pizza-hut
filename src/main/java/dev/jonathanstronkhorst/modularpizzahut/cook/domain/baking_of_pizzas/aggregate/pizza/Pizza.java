@@ -3,18 +3,27 @@ package dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.agg
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.pizza.ingredients.*;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
 
-@Getter
 public enum Pizza {
     SALAMI(1, "Salami", List.of(
+            new TomatoSauce(10),
             new Salami(25),
             new Cheese(10)
     )),
     HAWAI(2, "Hawai", List.of(
+            new TomatoSauce(10),
             new Ham(30),
             new Pineapple(5),
-            new Cheese(8)));
+            new Cheese(8))),
+    MARGHERITA(3, "Margherita", List.of(
+            new TomatoSauce(15),
+            new Cheese(20)
+    )),
+    VEGGIE(4, "Veggie", List.of(
+            new TomatoSauce(10),
+            new Mushroom(15),
+            new Cheese(10)
+    ));
 
     final int id;
     final String name;
@@ -24,6 +33,18 @@ public enum Pizza {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
     public boolean containsPineapple() {

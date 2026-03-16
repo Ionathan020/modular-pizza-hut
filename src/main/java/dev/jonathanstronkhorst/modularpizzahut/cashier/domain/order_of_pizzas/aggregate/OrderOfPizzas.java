@@ -1,16 +1,22 @@
-package dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate;
+package dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate;
 
-import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.order.*;
-import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.pizza.Pizza;
-import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.command.OrderPizzas;
-import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.event.PizzaOrdered;
+import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.order.*;
+import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.aggregate.pizza.Pizza;
+import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.command.OrderPizzas;
+import dev.jonathanstronkhorst.modularpizzahut.cassier.domain.order_of_pizzas.event.PizzaOrdered;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class OrderOfPizzas {
+    private static final Logger logger = LoggerFactory.getLogger(OrderOfPizzas.class);
     private final OrderOfPizzasEntity orderOfPizzasEntity;
+
+    public OrderOfPizzas(OrderOfPizzasEntity orderOfPizzasEntity) {
+        this.orderOfPizzasEntity = orderOfPizzasEntity;
+    }
 
     public static OrderOfPizzas of(CustomerDetails customerDetails,
                                   IsDeliveryOrder isDeliveryOrder,
@@ -19,40 +25,40 @@ public class OrderOfPizzas {
     }
 
     public PizzaOrderResult handleCommand(OrderPizzas orderPizzas) {
-        System.out.println("Start handling new pizza order command.");
+        logger.info("Start handling new pizza order command.");
         var orderReference =  new OrderReference(UUID.randomUUID());
         if (orderOfPizzasEntity.hasPizzaContainingPineapple()) {
-            System.out.println("""
+            logger.info("""
                                ⠀⠀⢀⣤⣤⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠿⢿⣏⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣶⣶⣿⣇⡁⠈⢿⣧⡀⠹⣿⣦⡀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡿⠃⢰⣿⡿⢿⣆⠀⠙⣿⣦⡈⠙⢿⣦⡀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠃⠀⣿⡏⠁⠘⣿⣆⠀⠈⠻⣷⣄⠀⠙⢿⣦⡀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⠇⠀⠀⢸⣧⠀⠀⠘⢿⣆⠀⠀⠈⠻⣷⡄⠀⢻⣷
-   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠀⠀⠀⢸⣿⡆⠀⠀⠈⢿⣧⠀⠀⠀⢹⣷⠀⠈⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠟⠁⠀⠀⠀⢀⣿⡟⣿⣆⠀⠀⠀⢻⣧⠀⠀⠀⣿⡆⢠⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⡟⠁⠀⠀⠀⠀⢠⣾⠟⠁⠘⣿⡄⠀⠀⠈⣿⣇⠀⠀⢹⣇⢸⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠋⠀⠀⠀⠀⠀⣠⣿⣏⣠⣤⣤⣿⡇⠀⠀⠀⠸⣿⠀⠀⠘⣿⢸⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡟⠁⠀⠀⠀⠠⡶⠟⠛⠛⠋⠉⠉⠉⢹⣿⠀⠀⠀⠀⣿⡇⠀⠀⢿⢸⣿
-⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⣾⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⡀⠀⠀⠀⠸⠧⠀⠀⠀⣿⡟
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⡿⠿⠛⠛⠉⢻⣇⠀⠀⠀⠀⠀⠀⠀⢠⣿⠁
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⠁⠀⠀⠀⠀⠀⢀⣴⡾⠟⠉⠀⠀⠀⠀⠀⠀⠀⠛⠀⠀⠀⠀⠀⠀⠀⣼⡟⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡇⠀⠀⠀⠀⠀⣠⡾⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡿⠁⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠁⠀⠀⠀⠀⣰⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠟⠀⠀⠀
-    ⠀⢀⣼⡟⠁⠀⠀⠀⠀⠀⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⠟⠁⠀⠀⠀⠀
-    ⣴⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣶⡿⠛⠁⠀⠀⠀⠀⠀⠀
-    ⠹⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣴⣾⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
-              ⠀⠀⠀⠀⠀⢀⣠⣴⡾⠿⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                    """);
-            System.out.println("We will not serve pizza with pineapple for order: " +
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠿⢿⣏⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣶⣶⣿⣇⡁⠈⢿⣧⡀⠹⣿⣦⡀⠀⠀⠀⠀
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡿⠃⢰⣿⡿⢿⣆⠀⠙⣿⣦⡈⠙⢿⣦⡀⠀⠀
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠃⠀⣿⡏⠁⠘⣿⣆⠀⠈⠻⣷⣄⠀⠙⢿⣦⡀
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⠇⠀⠀⢸⣧⠀⠀⠘⢿⣆⠀⠀⠈⠻⣷⡄⠀⢻⣷
+                                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠋⠀⠀⠀⢸⣿⡆⠀⠀⠈⢿⣧⠀⠀⠀⢹⣷⠀⠈⣿
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠟⠁⠀⠀⠀⢀⣿⡟⣿⣆⠀⠀⠀⢻⣧⠀⠀⠀⣿⡆⢠⣿
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⡟⠁⠀⠀⠀⠀⢠⣾⠟⠁⠘⣿⡄⠀⠀⠈⣿⣇⠀⠀⢹⣇⢸⣿
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠋⠀⠀⠀⠀⠀⣠⣿⣏⣠⣤⣤⣿⡇⠀⠀⠀⠸⣿⠀⠀⠘⣿⢸⣿
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡟⠁⠀⠀⠀⠠⡶⠟⠛⠛⠋⠉⠉⠉⢹⣿⠀⠀⠀⠀⣿⡇⠀⠀⢿⢸⣿
+                               ⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⣾⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⡀⠀⠀⠀⠸⠧⠀⠀⠀⣿⡟
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⡟⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⡿⠿⠛⠛⠉⢻⣇⠀⠀⠀⠀⠀⠀⠀⢠⣿⠁
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⠁⠀⠀⠀⠀⠀⢀⣴⡾⠟⠉⠀⠀⠀⠀⠀⠀⠀⠛⠀⠀⠀⠀⠀⠀⠀⣼⡟⠀
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡇⠀⠀⠀⠀⠀⣠⡾⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡿⠁⠀
+                               ⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠁⠀⠀⠀⠀⣰⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠟⠀⠀⠀
+                                   ⠀⢀⣼⡟⠁⠀⠀⠀⠀⠀⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⠟⠁⠀⠀⠀⠀
+                                   ⣴⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣶⡿⠛⠁⠀⠀⠀⠀⠀⠀
+                                   ⠹⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣴⣾⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                                             ⠀⠀⠀⠀⠀⢀⣠⣴⡾⠿⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                                   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                                   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠻⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                                                   """);
+            logger.warn("We will not serve pizza with pineapple for order: {}",
                     orderReference.orderReference().toString());
             return PizzaOrderResult.of(
                     orderReference,
                     OrderStatus.NEW);
         }
-        System.out.println("Order handled for: " + orderReference.orderReference().toString());
+        logger.info("Order handled for: {}", orderReference.orderReference().toString());
         return PizzaOrderResult.of(
                 orderReference,
                 PizzaOrdered.of(orderReference,

@@ -5,14 +5,16 @@ import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggr
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.order.OrderReference;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.aggregate.pizza.Pizza;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 @Component
 public class BakingOfPizzaProvider {
 
-    BakingOfPizzaRepository bakingOfPizzaRepository;
+    private final BakingOfPizzaRepository bakingOfPizzaRepository;
+
+    public BakingOfPizzaProvider(BakingOfPizzaRepository bakingOfPizzaRepository) {
+        this.bakingOfPizzaRepository = bakingOfPizzaRepository;
+    }
 
     public BakingOfPizzas getBakingOfPizzas(OrderReference orderReference, IsDeliveryOrder isDeliveryOrder,
                                             List<Pizza> pizzas) {

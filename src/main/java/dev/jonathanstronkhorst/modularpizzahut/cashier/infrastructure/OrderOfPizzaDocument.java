@@ -7,12 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name="pizzaorders")
 public class OrderOfPizzaDocument {
     @Id
@@ -22,6 +18,9 @@ public class OrderOfPizzaDocument {
     private boolean isDeliveryOrder;
     private String address;
     private String pizzaIds;
+
+    public OrderOfPizzaDocument() {
+    }
 
     private OrderOfPizzaDocument(UUID orderReference,
                                  String name,
@@ -35,6 +34,54 @@ public class OrderOfPizzaDocument {
         this.isDeliveryOrder = isDeliveryOrder;
         this.address = address;
         setPizzaIds(pizzaIds);
+    }
+
+    public UUID getOrderReference() {
+        return orderReference;
+    }
+
+    public void setOrderReference(UUID orderReference) {
+        this.orderReference = orderReference;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isDeliveryOrder() {
+        return isDeliveryOrder;
+    }
+
+    public void setDeliveryOrder(boolean deliveryOrder) {
+        isDeliveryOrder = deliveryOrder;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getRawPizzaIds() {
+        return pizzaIds;
+    }
+
+    public void setRawPizzaIds(String pizzaIds) {
+        this.pizzaIds = pizzaIds;
     }
 
     public static OrderOfPizzaDocument of(UUID orderReference,
