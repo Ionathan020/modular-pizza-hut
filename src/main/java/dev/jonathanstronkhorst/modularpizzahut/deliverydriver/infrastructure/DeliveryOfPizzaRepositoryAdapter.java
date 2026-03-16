@@ -18,23 +18,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeliveryOfPizzaRepositoryAdapter implements DeliveringOfPizzaRepository {
     private static final Logger logger = LoggerFactory.getLogger(DeliveryOfPizzaRepositoryAdapter.class);
-    private final DeliveryOfPizzaJPARepository deliveryOfPizzaJPARepository;
-
-    public DeliveryOfPizzaRepositoryAdapter(DeliveryOfPizzaJPARepository deliveryOfPizzaJPARepository) {
-        this.deliveryOfPizzaJPARepository = deliveryOfPizzaJPARepository;
-    }
 
     @Override
     public Optional<DeliveringOfPizza> findDeliveringOfPizza(OrderReference orderReference) {
-        Optional<DeliveryOfPizzaDocument> optionalDeliveryOfPizzaDocument = deliveryOfPizzaJPARepository.findByOrderReference(orderReference.orderReference());
-        if(optionalDeliveryOfPizzaDocument.isPresent()) {
-            DeliveryOfPizzaDocument deliveryOfPizzaDocument = optionalDeliveryOfPizzaDocument.get();
-            return Optional.of(DeliveringOfPizza.of(
-                    OrderReference.of(deliveryOfPizzaDocument.getOrderReference()),
-                    CustomerDetails.of(deliveryOfPizzaDocument.getName(), deliveryOfPizzaDocument.getPhoneNumber()),
-                    DeliveryAddress.of(deliveryOfPizzaDocument.getAddress())
-            ));
-        }
         return Optional.empty();
     }
 
@@ -45,11 +31,6 @@ public class DeliveryOfPizzaRepositoryAdapter implements DeliveringOfPizzaReposi
 
     @Override
     public void save(PizzaDelivered pizzaDelivered) {
-        deliveryOfPizzaJPARepository.save(DeliveryOfPizzaDocument.of(
-                pizzaDelivered.getOrderReference().orderReference(),
-                pizzaDelivered.getCustomerDetails().name(),
-                pizzaDelivered.getCustomerDetails().phoneNumber(),
-                pizzaDelivered.getDeliveryAddress().address()));
         logger.info("WHAT! NO TIP?!");
     }
 }
