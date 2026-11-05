@@ -22,6 +22,11 @@ class ModularPizzaHutApplicationTests {
                     .should().dependOnClassesThat().resideInAPackage("..infrastructure..");
 
     @ArchTest
+    static final ArchRule domain_should_not_depend_on_spring_ai =
+            noClasses().that().resideInAPackage("..domain..")
+                    .should().dependOnClassesThat().resideInAPackage("org.springframework.ai..");
+
+    @ArchTest
     static final ArchRule infrastructure_implementations_should_reside_in_infrastructure_package =
             classes().that().haveSimpleNameEndingWith("Adapter")
                     .or().haveSimpleNameEndingWith("RepositoryImpl")

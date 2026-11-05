@@ -7,6 +7,14 @@ spring:
     url: jdbc:h2:mem:pizzeria;NON_KEYWORDS=user
     generate-unique-name: false
     name: pizzeria
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      init:
+        pull-model-strategy: never
+      chat:
+        options:
+          model: llama3.2
 #  data:
 #    mongodb:
 #      host: localhost

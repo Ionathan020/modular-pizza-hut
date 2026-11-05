@@ -27,7 +27,19 @@
         <java.version>25</java.version>
         <vaadin.version>24.6.4</vaadin.version>
         <maven.compiler.release>21</maven.compiler.release>
+        <spring-ai.version>2.0.0</spring-ai.version>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -63,6 +75,10 @@
             <groupId>org.springframework.modulith</groupId>
             <artifactId>spring-modulith-starter-core</artifactId>
             <version>2.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-ollama</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
