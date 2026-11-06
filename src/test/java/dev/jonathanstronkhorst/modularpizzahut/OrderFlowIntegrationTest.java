@@ -7,6 +7,7 @@ import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.ag
 import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.order.PizzaOrderResult;
 import dev.jonathanstronkhorst.modularpizzahut.cashier.domain.order_of_pizzas.aggregate.pizza.Pizza;
 import dev.jonathanstronkhorst.modularpizzahut.cook.domain.baking_of_pizzas.BakingOfPizzaService;
+import dev.jonathanstronkhorst.modularpizzahut.counter.domain.handing_out_of_pizzas.HandingOutOfPizzaService;
 import dev.jonathanstronkhorst.modularpizzahut.deliverydriver.domain.delivering_of_pizza.DeliveringOfPizzaService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ class OrderFlowIntegrationTest {
     @MockitoSpyBean
     private DeliveringOfPizzaService deliveringOfPizzaService;
 
+    @MockitoSpyBean
+    private HandingOutOfPizzaService handingOutOfPizzaService;
+
     @Test
     void shouldProcessOrderFromCashierToDelivery() {
         // Given
@@ -52,5 +56,22 @@ class OrderFlowIntegrationTest {
             verify(bakingOfPizzaService, atLeastOnce()).bakePizza(any());
             verify(deliveringOfPizzaService, atLeastOnce()).deliverPizza(any());
         });
+    }
+
+    @Test
+    void shouldHandOutPickupOrderWithoutSendingItForDelivery() {
+        CustomerDetails customerDetails = CustomerDetails.of("Pickup Test", "0600000002");
+        IsDeliveryOrder isDeliveryOrder = IsDeliveryOrder.of(false);
+        DeliveryAddress deliveryAddress = DeliveryAddress.of(null);
+        List<Pizza> pizzas = List.of(Pizza.MARGHERITA);
+
+        PizzaOrderResult result = orderOfPizzaService.orderPizza(customerDetails, isDeliveryOrder, deliveryAddress, pizzas);
+
+        assertThat(result.getEvent()).isNotNull();
+        await().atMost(5, TimeUnit.SECONDS).untilAsserted(() -> {
+            verify(bakingOfPizzaService, atLeastOnce()).bakePizza(any());
+            verify(handingOutOfPizzaService, atLeastOnce()).handOutPizza(any());
+        });
+        verify(deliveringOfPizzaService, never()).deliverPizza(any());
     }
 }
